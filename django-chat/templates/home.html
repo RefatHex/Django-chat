@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        margin: 0 auto;
+        max-width: 800px;
+        padding: 0 20px;
+        background-color: #d4f5e3; /* Light green background */
+      }
+
+      div.align-center {
+        text-align: center;
+      }
+
+      h2 {
+        background-color: #27ae60; /* Dark green header */
+        color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+      }
+
+      .container {
+        border: 2px solid #dedede;
+        background-color: #ecf0f1; /* Light grey background */
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+      }
+
+      input[type="text"],
+      select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input[type="submit"] {
+        width: 100%;
+        background-color: #27ae60; /* Dark green button */
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #219d54; /* Slightly darker green on hover */
+      }
+
+      div.content {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="align-center">
+      <h2>Django Chat</h2>
+    </div>
+
+    <div class="container">
+      <form id="post-form" method="POST" action="checkview">
+        {% csrf_token %}
+        <label>Room Name</label>
+        <input type="text" name="room_name" id="room_name" width="100px" />
+        <label>Username</label>
+        <input type="text" name="username" id="username" width="100px" />
+        <input type="submit" value="Enter Room" />
+      </form>
+    </div>
+  </body>
+</html>
