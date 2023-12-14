@@ -1,27 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       body {
         margin: 0 auto;
         max-width: 800px;
         padding: 0 20px;
-        background-color: #ecf0f1;
-      }
-
-      h2 {
-        background-color: #2c3e50;
-        color: #ecf0f1;
-        padding: 20px;
-        margin: 0;
-        border-radius: 5px 5px 0 0;
       }
 
       .container {
-        border: 2px solid #3498db;
-        background-color: #d1f2eb;
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
         border-radius: 5px;
         padding: 10px;
         margin: 10px 0;
@@ -61,44 +51,6 @@
         float: left;
         color: #999;
       }
-
-      #display {
-        overflow-y: auto;
-        max-height: 300px;
-      }
-
-      input[type="text"],
-      select {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #3498db;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-
-      input[type="submit"] {
-        width: 100%;
-        background-color: #27ae60;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-
-      input[type="submit"]:hover {
-        background-color: #219d54;
-      }
-
-      div {
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        padding: 20px;
-      }
     </style>
     <script
       src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -107,9 +59,14 @@
     ></script>
   </head>
   <body>
-    <h2>{{ room }} - DjChat</h2>
+    <h2>{{room}} - DjChat</h2>
 
-    <div id="display"></div>
+    <div id="display">
+      <!-- <div class="container darker">
+  <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
+  <span class="time-left">20th, April 2021</span>
+</div> -->
+    </div>
 
     <script>
       $(document).ready(function () {
@@ -133,7 +90,7 @@
               }
             },
             error: function (response) {
-              alert("An error occurred");
+              alert("An error occured");
             },
           });
         }, 1000);
@@ -141,49 +98,78 @@
     </script>
 
     <div class="container">
+      <style>
+        input[type="text"],
+        select {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+          width: 100%;
+          background-color: #4caf50;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px 0;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+          background-color: #45a049;
+        }
+
+        div {
+          border-radius: 5px;
+          background-color: #f2f2f2;
+          padding: 20px;
+        }
+      </style>
+
       <form id="post-form">
         {% csrf_token %}
         <input
           type="hidden"
           name="username"
           id="username"
-          value="{{ username }}"
+          value="{{username}}"
         />
         <input
           type="hidden"
           name="room_id"
           id="room_id"
-          value="{{ room_details.id }}"
+          value="{{room_details.id}}"
         />
-        <input
-          type="text"
-          name="message"
-          id="message"
-          width="100px"
-          placeholder="Type your message here"
-        />
+        <input type="text" name="message" id="message" width="100px" />
         <input type="submit" value="Send" />
       </form>
     </div>
-
-    <script type="text/javascript">
-      $(document).on("submit", "#post-form", function (e) {
-        e.preventDefault();
-        $.ajax({
-          type: "POST",
-          url: "/send",
-          data: {
-            username: $("#username").val(),
-            room_id: $("#room_id").val(),
-            message: $("#message").val(),
-            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
-          },
-          success: function (data) {
-            //alert(data)
-          },
-        });
-        document.getElementById("message").value = "";
-      });
-    </script>
   </body>
+
+  <script type="text/javascript">
+    $(document).on("submit", "#post-form", function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "POST",
+        url: "/send",
+        data: {
+          username: $("#username").val(),
+          room_id: $("#room_id").val(),
+          message: $("#message").val(),
+          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function (data) {
+          //alert(data)
+        },
+      });
+      document.getElementById("message").value = "";
+    });
+  </script>
 </html>
